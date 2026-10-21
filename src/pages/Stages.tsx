@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ArrowRight, PhoneOff } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 
-const TOTAL_STAGES = 8;
+export const TOTAL_STAGES = 8;
 
 export type StagesProps = {
   stageNumber: number;
@@ -23,11 +22,14 @@ export type StagesProps = {
   theyMaySay: string[];
   happenedOptions: string[];
   nextStageName: string;
+  herWords: string;
+  onHerWordsChange: (value: string) => void;
+  happened: string | null;
+  onHappenedChange: (value: string) => void;
   onNext?: () => void;
   onEndCall?: () => void;
 };
 
-// Reusable function/component for they may say, what happend....
 function SectionLabel({ children }: { children: string }) {
   return (
     <p className="text-xs font-medium tracking-[0.14em] text-muted-foreground uppercase">
@@ -43,13 +45,13 @@ export function Stages({
   theyMaySay,
   happenedOptions,
   nextStageName,
+  herWords,
+  onHerWordsChange,
+  happened,
+  onHappenedChange,
   onNext,
   onEndCall,
 }: StagesProps) {
-  const [herWords, setHerWords] = useState("");
-  const [happened, setHappened] = useState<string | null>(null);
-  // the generic type tell ts that happend could have a value of string or null.
-
   return (
     <main className="flex min-h-svh justify-center bg-background px-4 py-8 sm:px-6 sm:py-12">
       <Card className="w-full max-w-2xl shadow-sm">
@@ -130,7 +132,7 @@ export function Stages({
                     size="lg"
                     aria-pressed={isSelected}
                     className="h-auto min-h-10 justify-start whitespace-normal py-2.5 text-left"
-                    onClick={() => setHappened(option)}
+                    onClick={() => onHappenedChange(option)}
                   >
                     {option}
                   </Button>
@@ -150,7 +152,7 @@ export function Stages({
             <Textarea
               id="her-words"
               value={herWords}
-              onChange={(event) => setHerWords(event.target.value)}
+              onChange={(event) => onHerWordsChange(event.target.value)}
               placeholder="Write what they said..."
               className="min-h-32 resize-y"
             />

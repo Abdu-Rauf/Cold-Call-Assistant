@@ -22,8 +22,8 @@ export type StagesProps = {
   theyMaySay: string[];
   happenedOptions: string[];
   nextStageName: string;
-  herWords: string;
-  onHerWordsChange: (value: string) => void;
+  theirWords: string;
+  onTheirWordsChange: (value: string) => void;
   happened: string | null;
   onHappenedChange: (value: string) => void;
   onNext?: () => void;
@@ -45,8 +45,8 @@ export function Stages({
   theyMaySay,
   happenedOptions,
   nextStageName,
-  herWords,
-  onHerWordsChange,
+  theirWords,
+  onTheirWordsChange,
   happened,
   onHappenedChange,
   onNext,
@@ -144,15 +144,15 @@ export function Stages({
           <Separator />
 
           <section className="space-y-3">
-            <Label htmlFor="her-words">
+            <Label htmlFor="their-words">
               <span className="text-xs font-medium tracking-[0.14em] text-muted-foreground uppercase">
-                Her words
+                Their words
               </span>
             </Label>
             <Textarea
-              id="her-words"
-              value={herWords}
-              onChange={(event) => onHerWordsChange(event.target.value)}
+              id="their-words"
+              value={theirWords}
+              onChange={(event) => onTheirWordsChange(event.target.value)}
               placeholder="Write what they said..."
               className="min-h-32 resize-y"
             />

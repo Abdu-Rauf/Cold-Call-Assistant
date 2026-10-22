@@ -1,7 +1,4 @@
-import { useState } from "react";
-import { Stages } from "@/pages/Stages";
-
-type StageContent = {
+export type StageContent = {
   stageNumber: number;
   stageName: string;
   stageDescription: string;
@@ -10,8 +7,7 @@ type StageContent = {
   nextStageName: string;
 };
 
-
-const CALL_STAGES: StageContent[] = [
+export const CALL_STAGES: StageContent[] = [
   {
     stageNumber: 1,
     stageName: "Opening",
@@ -42,11 +38,7 @@ const CALL_STAGES: StageContent[] = [
       "What is this report?",
       "Is this a paid service?",
     ],
-    happenedOptions: [
-      "Ready to continue",
-      "Not interested",
-      "Can't talk now",
-    ],
+    happenedOptions: ["Ready to continue", "Not interested", "Can't talk now"],
     nextStageName: "Permission",
   },
   {
@@ -145,67 +137,14 @@ const CALL_STAGES: StageContent[] = [
   {
     stageNumber: 8,
     stageName: "Close",
-    stageDescription:
-      "Confirm how the conversation ended and save the call.",
+    stageDescription: "Confirm how the conversation ended and save the call.",
     theyMaySay: [
       "Thank you.",
       "Thank you for your time.",
       "All right, thanks. Bye.",
       "I'll wait for the report.",
     ],
-    happenedOptions: [
-      "Closed with a next step",
-      "Closed with no next step",
-    ],
+    happenedOptions: ["Closed with a next step", "Closed with no next step"],
     nextStageName: "Finish",
   },
 ];
-
-export default function App() {
-  const [stageNumber, setStageNumber] = useState(1);
-  const [theirWords, setTheirWords] = useState("");
-  const [happened, setHappened] = useState<string | null>(null);
-
-  const currentStage = CALL_STAGES[stageNumber - 1];
-
-  function recordCurrentStage(){
-    // save in stage table
-    return null;
-  }
-  function goNext() {
-    recordCurrentStage();
-    setTheirWords("");
-    setHappened(null);
-
-    if (stageNumber < CALL_STAGES.length) {
-      setStageNumber((current) => current + 1);
-    }
-  }
-
-  function endCall() {
-    recordCurrentStage();
-    setTheirWords("");
-    setHappened(null);
-  }
-
-  if (!currentStage) {
-    return null;
-  }
-
-  return (
-    <Stages
-      stageNumber={currentStage.stageNumber}
-      stageName={currentStage.stageName}
-      stageDescription={currentStage.stageDescription}
-      theyMaySay={currentStage.theyMaySay}
-      happenedOptions={currentStage.happenedOptions}
-      nextStageName={currentStage.nextStageName}
-      theirWords={theirWords}
-      onTheirWordsChange={setTheirWords}
-      happened={happened}
-      onHappenedChange={setHappened}
-      onNext={goNext}
-      onEndCall={endCall}
-    />
-  );
-}

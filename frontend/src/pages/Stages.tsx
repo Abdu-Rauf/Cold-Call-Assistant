@@ -114,6 +114,7 @@ export function Stages({
               className="grid grid-cols-1 gap-2 sm:grid-cols-2"
               role="group"
               aria-label="What happened"
+              aria-required="true"
             >
               {happenedOptions.map((option) => {
                 const isSelected = happened === option;
@@ -169,7 +170,12 @@ export function Stages({
             <PhoneOff data-icon="inline-start" />
             End call
           </Button>
-          <Button type="button" size="lg" onClick={onNext}>
+          <Button
+            type="button"
+            size="lg"
+            disabled={!happened}
+            onClick={onNext}
+          >
             Next: {nextStageName}
             <ArrowRight data-icon="inline-end" />
           </Button>

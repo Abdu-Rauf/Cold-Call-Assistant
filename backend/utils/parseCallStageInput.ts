@@ -10,16 +10,18 @@ function isNonEmptyString(value: unknown): value is string {
 }
 
 export function parseCallStageInput(
-  id: string | undefined,
+  id: string,
   body: unknown,
-): { error: string } | { data: CallStageInput } {
+):
+  | { success: true; data: CallStageInput }
+  | { success: false; error: string } {
   const callId = Number(id);
   if (!Number.isFinite(callId) || callId <= 0) {
-    return { error: "A valid call id is required." };
+    return { success: false, error: "A valid call id is required." };
   }
 
   if (body === null || typeof body !== "object") {
-    return { error: "Request body must be an object." };
+    return { success: false, error: "Request body must be an object." };
   }
 
   const { stage, stageOutcome, prospectWords } = body as Record<
@@ -28,11 +30,11 @@ export function parseCallStageInput(
   >;
 
   if (!isNonEmptyString(stage)) {
-    return { error: "stage is required." };
+    return { success: false, error: "stage is required." };
   }
 
   if (!isNonEmptyString(stageOutcome)) {
-    return { error: "stageOutcome is required." };
+    return { success: false, error: "stageOutcome is required." };
   }
 
   if (
@@ -40,10 +42,11 @@ export function parseCallStageInput(
     prospectWords !== null &&
     typeof prospectWords !== "string"
   ) {
-    return { error: "prospectWords must be a string." };
+    return { success: false, error: "prospectWords must be a string." };
   }
 
   return {
+    success: true,
     data: {
       callId,
       stage: stage.trim(),

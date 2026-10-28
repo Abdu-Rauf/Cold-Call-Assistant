@@ -165,6 +165,7 @@ export function Stages({
             type="button"
             variant="destructive"
             size="lg"
+            disabled={!happened}
             onClick={onEndCall}
           >
             <PhoneOff data-icon="inline-start" />
